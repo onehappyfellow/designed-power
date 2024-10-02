@@ -1,176 +1,191 @@
 import * as React from "react"
+import Layout from '../components/layout'
+import { StaticImage } from 'gatsby-plugin-image'
+import Seo from '../components/seo'
+import HomeCarousel from "../components/homeCarousel"
+import { styled } from "styled-components"
+import { Link } from "gatsby"
 
-const pageStyles = {
-  color: "#232129",
-  padding: 96,
-  fontFamily: "-apple-system, Roboto, sans-serif, serif",
-}
-const headingStyles = {
-  marginTop: 0,
-  marginBottom: 64,
-  maxWidth: 320,
-}
-const headingAccentStyles = {
-  color: "#663399",
-}
-const paragraphStyles = {
-  marginBottom: 48,
-}
-const codeStyles = {
-  color: "#8A6534",
-  padding: 4,
-  backgroundColor: "#FFF4DB",
-  fontSize: "1.25rem",
-  borderRadius: 4,
-}
-const listStyles = {
-  marginBottom: 96,
-  paddingLeft: 0,
-}
-const listItemStyles = {
-  fontWeight: 300,
-  fontSize: 24,
-  maxWidth: 560,
-  marginBottom: 30,
-}
 
-const linkStyle = {
-  color: "#8954A8",
-  fontWeight: "bold",
-  fontSize: 16,
-  verticalAlign: "5%",
-}
-
-const docLinkStyle = {
-  ...linkStyle,
-  listStyleType: "none",
-  marginBottom: 24,
-}
-
-const descriptionStyle = {
-  color: "#232129",
-  fontSize: 14,
-  marginTop: 10,
-  marginBottom: 0,
-  lineHeight: 1.25,
-}
-
-const docLink = {
-  text: "Documentation",
-  url: "https://www.gatsbyjs.com/docs/",
-  color: "#8954A8",
-}
-
-const badgeStyle = {
-  color: "#fff",
-  backgroundColor: "#088413",
-  border: "1px solid #088413",
-  fontSize: 11,
-  fontWeight: "bold",
-  letterSpacing: 1,
-  borderRadius: 4,
-  padding: "4px 6px",
-  display: "inline-block",
-  position: "relative",
-  top: -2,
-  marginLeft: 10,
-  lineHeight: 1,
-}
-
-const links = [
-  {
-    text: "Tutorial",
-    url: "https://www.gatsbyjs.com/docs/tutorial/getting-started/",
-    description:
-      "A great place to get started if you're new to web development. Designed to guide you through setting up your first Gatsby site.",
-    color: "#E95800",
-  },
-  {
-    text: "How to Guides",
-    url: "https://www.gatsbyjs.com/docs/how-to/",
-    description:
-      "Practical step-by-step guides to help you achieve a specific goal. Most useful when you're trying to get something done.",
-    color: "#1099A8",
-  },
-  {
-    text: "Reference Guides",
-    url: "https://www.gatsbyjs.com/docs/reference/",
-    description:
-      "Nitty-gritty technical descriptions of how Gatsby works. Most useful when you need detailed information about Gatsby's APIs.",
-    color: "#BC027F",
-  },
-  {
-    text: "Conceptual Guides",
-    url: "https://www.gatsbyjs.com/docs/conceptual/",
-    description:
-      "Big-picture explanations of higher-level Gatsby concepts. Most useful for building understanding of a particular topic.",
-    color: "#0D96F2",
-  },
-  {
-    text: "Plugin Library",
-    url: "https://www.gatsbyjs.com/plugins",
-    description:
-      "Add functionality and customize your Gatsby site or app with thousands of plugins built by our amazing developer community.",
-    color: "#8EB814",
-  },
-  {
-    text: "Build and Host",
-    url: "https://www.gatsbyjs.com/cloud",
-    badge: true,
-    description:
-      "Now you’re ready to show the world! Give your Gatsby site superpowers: Build and host on Gatsby Cloud. Get started for free!",
-    color: "#663399",
-  },
-]
+const StyledPopup = styled.div`
+  position: relative;
+  max-width: var(--maxContentWidth);
+  margin: auto;
+  top: -3.2rem;
+  .popup-row {
+    position: absolute;
+    display: flex;
+  }
+  .popup-box {
+    background-color: rgba(3, 3, 3, 0.8);
+    padding: 1rem;
+    margin: 0 1rem;
+    flex: 1;
+    height: 15rem;
+    transition-duration: 0.6s;
+    transition-timing-function: ease;
+  }
+  .popup-box:hover, .popup-box:focus {
+    background-color: rgba(3, 3, 3, 0.9);
+    transform: translateY(-11.5rem);
+  }
+  .popup-box h2 {
+    color: #fff;
+    text-transform: uppercase;
+    border-bottom: 1px solid #aaa;
+    margin-top: -0.2rem;
+    padding-bottom: 0.5rem;
+  }
+  .popup-box p {
+    color: #fff;
+  }
+  .popup-box .btn {
+    background-color: var(--blue);
+    color: #fff;
+    text-decoration: none;
+    padding: 0.4rem 1rem;
+    border-radius: 0.2rem;
+  }
+`
+const StyledContent = styled.div`
+  background-color: #fff;
+  position: relative;
+  .headline {
+    margin-top: 0;
+    padding: 2rem;
+    padding-top: 3rem;
+    border-bottom: 1px solid #aaa;
+    color: var(--blue);
+    text-align: center;
+    ul {
+      display: inline-flex;
+      flex-direction: column;
+      text-align: left;
+    }
+  }
+  .row {
+    display: flex;
+    margin-top: 1rem;
+    .block {
+      flex: 1;
+      margin: 0 0.5rem;
+    }
+    .img {
+      box-shadow: 0 5px 8px -2px #888888;
+    }
+  }
+  .underline {
+    border-bottom: 1px solid #aaa;
+    padding-bottom: 1.5rem;
+  }
+  .contact {
+    display: block;
+    width: 200px;
+    margin: 1rem auto;
+    background: var(--blue);
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-decoration: none;
+    color: #fff;
+    padding: 0.5rem;
+    border-radius: 0.2rem;
+    box-shadow: 0 5px 8px -2px #888888;
+  }
+`
 
 const IndexPage = () => {
   return (
-    <main style={pageStyles}>
-      <h1 style={headingStyles}>
-        Congratulations
-        <br />
-        <span style={headingAccentStyles}>— you just made a Gatsby site! 🎉🎉🎉</span>
-      </h1>
-      <p style={paragraphStyles}>
-        Edit <code style={codeStyles}>src/pages/index.js</code> to see this page
-        update in real-time. 😎
-      </p>
-      <ul style={listStyles}>
-        <li style={docLinkStyle}>
-          <a
-            style={linkStyle}
-            href={`${docLink.url}?utm_source=starter&utm_medium=start-page&utm_campaign=minimal-starter`}
-          >
-            {docLink.text}
-          </a>
-        </li>
-        {links.map(link => (
-          <li key={link.url} style={{ ...listItemStyles, color: link.color }}>
-            <span>
-              <a
-                style={linkStyle}
-                href={`${link.url}?utm_source=starter&utm_medium=start-page&utm_campaign=minimal-starter`}
-              >
-                {link.text}
-              </a>
-              {link.badge && (
-                <span style={badgeStyle} aria-label="New Badge">
-                  NEW!
-                </span>
-              )}
-              <p style={descriptionStyle}>{link.description}</p>
-            </span>
-          </li>
-        ))}
-      </ul>
-      <img
-        alt="Gatsby G Logo"
-        src="data:image/svg+xml,%3Csvg width='24' height='24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 2a10 10 0 110 20 10 10 0 010-20zm0 2c-3.73 0-6.86 2.55-7.75 6L14 19.75c3.45-.89 6-4.02 6-7.75h-5.25v1.5h3.45a6.37 6.37 0 01-3.89 4.44L6.06 9.69C7 7.31 9.3 5.63 12 5.63c2.13 0 4 1.04 5.18 2.65l1.23-1.06A7.959 7.959 0 0012 4zm-8 8a8 8 0 008 8c.04 0 .09 0-8-8z' fill='%23639'/%3E%3C/svg%3E"
-      />
-    </main>
+    <Layout banner={<HomeCarousel />}>
+
+      <StyledPopup>
+        <div className="popup-row">
+          <div className="popup-box">
+            <h2>Manufacturers</h2>
+            <p>Designed Power has product solutions from top electrical manufacturers to meet the most challenging power needs you have, regardless of what sort of facility you have.</p>
+            <Link to="/manufacturers" className="btn">Read More</Link>
+          </div>
+          <div className="popup-box">
+            <h2>Services</h2>
+            <p>Designed Power offers services from both manufacturers and highly trained third-party service organizations to keep your power equipment running at its optimum.</p>
+            <Link to="/services" className="btn">Read More</Link>
+          </div>
+          <div className="popup-box">
+            <h2>About Us</h2>
+            <p>Hear what our customers say: "I want you to know how sincerely appreciative we are of Designed Power for their effective and professional assistance..." </p>
+            <Link to="/about" className="btn">Read More</Link>
+          </div>
+        </div>
+      </StyledPopup>
+
+      <StyledContent>
+        <h1 className="headline">
+          <div>Designed Power is an electrical sales firm specializing in electrical power equipment and services:</div>
+          <ul>
+            <li>Power Distribution</li>
+            <li>Control & Automation</li>
+            <li>Energy Efficency</li>
+            <li>Resiliency</li>
+            <li>Power Quality</li>
+            <li>Energy Storage</li>
+          </ul>
+        </h1>
+        <h2>DESIGNED POWER... YOUR BEST SOURCE FOR THE RIGHT SOLUTION!</h2>
+        <div className="row underline">
+          <p className="block">Based in the heart of the southwest, Designed Power specializes in comprehensive and creative solutions for your toughest electrical power challenges. How do you get more from your electrical investments? Whether you need an upgrade, expansion or life extension Designed Power can help.</p>
+          <p className="block">With proven customer service, technical capability and sales expertise spanning well over 30 years, they offer a diverse product selection customized to your needs. Whether you’re building a new facility or just hunting down a hard-to-find replacement part, Designed Power can make the job easier and more affordable.</p>
+          <p className="block">Designed Power’s exceptional blend of technical insight, proactive salesmanship and superb customer support is all focused on electrical technology solutions. Whenever you need reliable answers, a quick response or a solution to your most challenging electrical problem, Designed Power is the first call to make.</p>
+        </div>
+        <div className="row">
+          <div className="block">
+            <StaticImage className="img" layout="constrained" src="../images/stock/Home2-290.jpg" alt="electrical power equipment" />
+            <h2>Electrical Power Equipment</h2>
+            <ul>
+              <li>Uninterruptible Power Supplies</li>
+              <li>Batteries & Energy Storage</li>
+              <li>Switchgear</li>
+              <li>Motor Controls & Drives</li>
+              <li>Custom Distribution Equipment</li>
+              <li>Transformers</li>
+              <li>Substations</li>
+              <li>Power Factor Correction</li>
+            </ul>
+          </div>
+          <div className="block">
+            <StaticImage className="img" layout="constrained" src="../images/stock/Home-290.jpg" alt="technician looking at control panel" />
+            <h2>Services</h2>
+            <ul>
+              <li>UPS service contracts</li>
+              <li>Battery replacements & upgrades</li>
+              <li>Commissioning & startup</li>
+              <li>Onsite repairs, retrofits & life extension</li>
+              <li>Power system studies</li>
+              <li>Relay & breaker testing & calibration</li>
+              <li>Turnkey projects</li>
+              <li>Equipment evaluations and salvage</li>
+            </ul>
+          </div>
+          <div className="block">
+            <StaticImage className="img" layout="constrained" src="../images/stock/Home4-290.jpg" alt="wires connected" />
+            <h2>Some of Our Partners</h2>
+            <ul>
+              <li>ABB</li>
+              <li>Benshaw</li>
+              <li>Eaton</li>
+              <li>Dis-Tran</li>
+              <li>ESS Metron</li>
+              <li>IEM</li>
+              <li>Mitsubishi</li>
+              <li>Virginia Transformers</li>
+            </ul>
+          </div>
+        </div>
+        <Link to="/contact" className="btn contact">Contact Us</Link>
+	    </StyledContent>
+    </Layout>
   )
 }
 
 export default IndexPage
 
-export const Head = () => <title>Home Page</title>
+export const Head = () => <Seo title="Home Page" />

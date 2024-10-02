@@ -4,9 +4,6 @@
   "private": true,
   "description": "designed-power",
   "author": "Jonathan Droege",
-  "keywords": [
-    "gatsby"
-  ],
   "scripts": {
     "develop": "gatsby develop",
     "start": "gatsby develop",
@@ -17,9 +14,15 @@
   "dependencies": {
     "babel-plugin-styled-components": "^2.1.4",
     "gatsby": "^5.13.7",
+    "gatsby-plugin-image": "^3.13.1",
+    "gatsby-plugin-sharp": "^5.13.1",
     "gatsby-plugin-styled-components": "^6.13.1",
+    "gatsby-source-filesystem": "^5.13.1",
+    "gatsby-transformer-sharp": "^5.13.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-icons": "^3.11.0",
+    "react-multi-carousel": "^2.8.5",
     "styled-components": "^6.1.13"
   }
 }
